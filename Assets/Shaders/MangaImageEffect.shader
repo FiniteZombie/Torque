@@ -41,8 +41,10 @@
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-				float frequency = 200.0;
-				float2 nearest = 2.0 * frac(frequency * i.uv) - 1.0;
+				float frequency = 10.0;
+				matrix <float, 2, 2> fMat = {0.707, -0.707, 0.707, 0.707};
+				float2 uv2 = fMat * i.uv;
+				float2 nearest = 2.0 * frac(frequency * uv2) - 1.0;
 				float dist = length(nearest);
 				float radius = 0.7;
 				float3 white = float3(1.0, 1.0, 1.0);

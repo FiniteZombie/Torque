@@ -5,8 +5,7 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		_ScreenSize ("Screen Size", Vector) = (0, 0, 0, 0)
 		_Frequency ("Frequency", Float) = 40
-		_LumThresh1 ("Lum Threshold Low", Float) = 0
-		_LumThresh2 ("Lum Threshold High", Float) = 1
+		_BlackThresh ("Black Threshold", Float) = 0.5
 	}
 	SubShader
 	{
@@ -104,17 +103,15 @@
 			sampler2D _MainTex;
 			float2 _ScreenSize;
 			float _Frequency;
-			float _LumThresh1;
-			float _LumThresh2;
+			float _BlackThresh;
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-				matrix <float, 2, 2> fMat = {0.707, -0.707, 0.707, 0.707};
-				float2 uv2 = mul(fMat, i.uv);
+				//float2 uv2 = mul(float2x2(0.707, -0.707, 0.707, 0.707), i.uv);
 				
-				float n = 0.2 * snoise(uv2 * 200.0); // Fractal noise
-				n = n + 0.1 * snoise(uv2 * 400.0);
-				n = n + 0.05 * snoise(uv2 * 800.0);
+				float n = 0.2 * snoise(i.uv * 200.0); // Fractal noise
+				n = n + 0.1 * snoise(i.uv * 400.0);
+				n = n + 0.05 * snoise(i.uv * 800.0);
 				
 				float n_white = n * .5 + .98;
 				float n_black = n + .1;
@@ -123,16 +120,36 @@
 				
 				float3 col = tex2D(_MainTex, i.uv);
 				
-				float lum = CalcLuminance(col);
-				//lum = lerp(_LumThresh1, lum, step(lum, _LumThresh1));
-				//lum = lerp(lum, _LumThresh2, step(lum, _LumThresh2));
-				float radius = sqrt(1 - lum);
+				// Perform a rough RGB-to-CMYK conversion
+				float4 cmyk;
+				cmyk.rgb = 1.0 - col;
+				cmyk.a = min(cmyk.r, min(cmyk.g, cmyk.b)); // Create K
+				cmyk.rgb -= cmyk.a; // Subtract K equivalent from CMY
+			 
+				// Distance to nearest point in a grid of
+				// (frequency x frequency) points over the unit square
+				float2 Kst = mul(mul(_Frequency, float2x2(0.707, -0.707, 0.707, 0.707)), i.uv);
+				float2 Kuv = 2.0 * frac(Kst) - 1.0;
+				float k = aastep(0.0, sqrt(cmyk.a) - length(Kuv) + n);
 				
-				float2 nearest = 2.0 * frac(_Frequency * uv2) - 1.0;
-				float dist = length(nearest);
+				float2 Cst = mul(mul(_Frequency, float2x2(0.966, -0.259, 0.259, 0.966)), i.uv);
+				float2 Cuv = 2.0 * frac(Cst) - 1.0;
+				float c = aastep(0.0, sqrt(cmyk.r) - length(Cuv) + n);
 				
-				float3 fragcolor = lerp(black, white, aastep(radius, dist + n));
-				return float4(fragcolor, 1.0);
+				float2 Mst = mul(mul(_Frequency, float2x2(0.966, 0.259, -0.259, 0.966)), i.uv);
+				float2 Muv = 2.0 * frac(Mst) - 1.0;
+				float m = aastep(0.0, sqrt(cmyk.g) - length(Muv) + n);
+				
+				float2 Yst = mul(_Frequency, i.uv); // 0 deg
+				float2 Yuv = 2.0 * frac(Yst) - 1.0;
+				float y = aastep(0.0, sqrt(cmyk.b) - length(Yuv) + n);
+			 
+				float3 rgbscreen = 1.0 - 0.9 * float3(c,m,y) + n;
+				rgbscreen = lerp(rgbscreen, black, 0.85*k + 0.3*n);
+				
+				float3 finalColor = lerp(black, rgbscreen, aastep(_BlackThresh, CalcLuminance(col)));
+	
+				return float4(finalColor, 1.0);
 			}
 			ENDCG
 		}

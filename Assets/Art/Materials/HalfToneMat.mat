@@ -71,6 +71,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
+        name: _BlackThresh
+      second: 0.223
+    - first:
         name: _BumpScale
       second: 1
     - first:
@@ -84,7 +87,7 @@ Material:
       second: 0
     - first:
         name: _Frequency
-      second: 78
+      second: 55
     - first:
         name: _GlossMapScale
       second: 1

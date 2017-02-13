@@ -224,7 +224,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.95862055, b: 1, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -274,9 +274,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Material: {fileID: 2100000, guid: c138cd028e4e4cb488199417bc23edab, type: 2}
-  Frequency: 78
-  LowThresh: 0
-  HighThresh: 1
+  Frequency: 55
+  BlackThresh: 0.223
 --- !u!1 &771749507
 GameObject:
   m_ObjectHideFlags: 0

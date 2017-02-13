@@ -8,9 +8,7 @@ public class HalfToneEffect : MonoBehaviour {
     [Range(0, 200)]
     public float Frequency = 40;
     [Range(0, 1)]
-    public float LowThresh = 0;
-    [Range(0, 1)]
-    public float HighThresh = 1;
+    public float BlackThresh = .5f;
 
 
     private Vector2 _screenSize = new Vector2();
@@ -20,8 +18,7 @@ public class HalfToneEffect : MonoBehaviour {
         _screenSize.y = src.height;
         Material.SetVector("_ScreenSize", _screenSize);
         Material.SetFloat("_Frequency", Frequency);
-        Material.SetFloat("_LumThresh1", LowThresh);
-        Material.SetFloat("_LumThresh2", HighThresh);
+        Material.SetFloat("_BlackThresh", BlackThresh);
         Graphics.Blit(src, dest, Material);
     }
 }

@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Penguin
-  m_Shader: {fileID: 4800000, guid: 7a3e38aa22db03a4d8d8915ccf2d4d33, type: 3}
+  m_Shader: {fileID: 4800000, guid: 77c124cf867cb154bb262488a021fc8a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -83,6 +83,9 @@ Material:
         name: _DstBlend
       second: 0
     - first:
+        name: _Frequency
+      second: 80
+    - first:
         name: _GlossMapScale
       second: 1
     - first:
@@ -92,8 +95,20 @@ Material:
         name: _GlossyReflections
       second: 1
     - first:
+        name: _LumThresh1
+      second: 0
+    - first:
+        name: _LumThresh2
+      second: 1
+    - first:
+        name: _MaxFreq
+      second: 200
+    - first:
         name: _Metallic
       second: 0
+    - first:
+        name: _MinFreq
+      second: 100
     - first:
         name: _Mode
       second: 0
@@ -125,3 +140,6 @@ Material:
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _ScreenSize
+      second: {r: 0, g: 0, b: 0, a: 0}

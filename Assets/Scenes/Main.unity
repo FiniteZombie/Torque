@@ -108,7 +108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &103178342
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -224,7 +224,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -233,7 +233,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 56
+  field of view: 52.2
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -268,12 +268,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 747152815}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d24b74e9476bea4a91309a8217eeecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Material: {fileID: 2100000, guid: c138cd028e4e4cb488199417bc23edab, type: 2}
+  Frequency: 78
+  LowThresh: 0
+  HighThresh: 1
 --- !u!1 &771749507
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &771749508
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -374,7 +377,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 401998, guid: 9eaed0879dcfc15498cad5beb8c4dcba, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -2.6
+      value: -1.55
       objectReference: {fileID: 0}
     - target: {fileID: 401998, guid: 9eaed0879dcfc15498cad5beb8c4dcba, type: 2}
       propertyPath: m_LocalRotation.x
@@ -396,29 +399,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 401998, guid: 9eaed0879dcfc15498cad5beb8c4dcba, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9eaed0879dcfc15498cad5beb8c4dcba, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &861005854 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 195686, guid: 9eaed0879dcfc15498cad5beb8c4dcba, type: 2}
-  m_PrefabInternal: {fileID: 861005853}
---- !u!114 &861005855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 861005854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52b8cf2eb46850241942ff45e95402ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RoadSize: 3
 --- !u!1 &1647118318
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +441,7 @@ Light:
   serializedVersion: 7
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 8
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10

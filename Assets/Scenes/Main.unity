@@ -398,6 +398,31 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114745655656734342, guid: 9eaed0879dcfc15498cad5beb8c4dcba,
+        type: 2}
+      propertyPath: WheelPosition
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114745655656734342, guid: 9eaed0879dcfc15498cad5beb8c4dcba,
+        type: 2}
+      propertyPath: RoadSize
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114745655656734342, guid: 9eaed0879dcfc15498cad5beb8c4dcba,
+        type: 2}
+      propertyPath: Handling
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114745655656734342, guid: 9eaed0879dcfc15498cad5beb8c4dcba,
+        type: 2}
+      propertyPath: WheelSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114745655656734342, guid: 9eaed0879dcfc15498cad5beb8c4dcba,
+        type: 2}
+      propertyPath: MaxTurnAngle
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9eaed0879dcfc15498cad5beb8c4dcba, type: 2}
   m_IsPrefabParent: 0

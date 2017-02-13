@@ -104,12 +104,12 @@
 			float _Width;
 			float _LineThresh;
 			
-			void SampleNeighbors(float2 uv, out float3 sample[32])
+			void SampleNeighbors(float2 uv, out float3 sample[16])
 			{
-				float stepWidth = _Width / 4.0;
+				float stepWidth = _Width / 2.0;
 				
 				[unroll]
-				for (int i = 0; i < 4; i++)
+				for (int i = 0; i < 2; i++)
 				{
 					int step = i * 8;
 					float width = stepWidth * i;
@@ -126,7 +126,7 @@
 			
 			float CalculateContour(float2 uv)
 			{
-				float3 sample[32];
+				float3 sample[16];
 				SampleNeighbors(uv, sample);
 				
 				float3 color = tex2D(_MainTex, uv);
@@ -134,7 +134,7 @@
 				float finalValue = 0.0;
 				
 				[unroll]
-				for (int i = 0; i < 32; i++)
+				for (int i = 0; i < 16; i++)
 				{
 					float diff = length(sample[i] - color);
 					float value = aastep(_LineThresh, diff);

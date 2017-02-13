@@ -6,6 +6,8 @@
 		_ScreenSize ("Screen Size", Vector) = (0, 0, 0, 0)
 		_Frequency ("Frequency", Float) = 40
 		_BlackThresh ("Black Threshold", Float) = 0.5
+		_Width ("Line Width", Float) = .1
+		_LineThresh ("Line Threshold", Float) = .5
 	}
 	SubShader
 	{
@@ -91,6 +93,56 @@
 				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 				return 130.0 * dot(m, g);
 			}
+			
+			float Cos30 = .8660;
+			float Cos60 = .5;
+			float Sin30 = .5;
+			float Sin60 = .8660;
+			float sin45 = .7071;
+			
+			sampler2D _MainTex;
+			float _Width;
+			float _LineThresh;
+			
+			void SampleNeighbors(float2 uv, out float3 sample[32])
+			{
+				float stepWidth = _Width / 4.0;
+				
+				[unroll]
+				for (int i = 0; i < 4; i++)
+				{
+					int step = i * 8;
+					float width = stepWidth * i;
+					sample[step + 0] = tex2D(_MainTex, uv + float2(width, 0));
+					sample[step + 1] = tex2D(_MainTex, uv + float2(width * sin45, width * sin45));
+					sample[step + 2] = tex2D(_MainTex, uv + float2(0, width));
+					sample[step + 3] = tex2D(_MainTex, uv + float2(-1 * width * sin45, 1 * width * sin45));
+					sample[step + 4] = tex2D(_MainTex, uv + float2(-1 * width, 0));
+					sample[step + 5] = tex2D(_MainTex, uv + float2(-1 * width * sin45, -1 * width * sin45));
+					sample[step + 6] = tex2D(_MainTex, uv + float2(0, -1 * width));
+					sample[step + 7] = tex2D(_MainTex, uv + float2(1 * width * sin45, -1 * width * sin45));
+				}
+			}
+			
+			float CalculateContour(float2 uv)
+			{
+				float3 sample[32];
+				SampleNeighbors(uv, sample);
+				
+				float3 color = tex2D(_MainTex, uv);
+			
+				float finalValue = 0.0;
+				
+				[unroll]
+				for (int i = 0; i < 32; i++)
+				{
+					float diff = length(sample[i] - color);
+					float value = aastep(_LineThresh, diff);
+					finalValue = lerp(finalValue, value, step(finalValue, value));
+				}
+				
+				return finalValue;
+			}
 
 			v2f vert (appdata v)
 			{
@@ -100,7 +152,6 @@
 				return o;
 			}
 			
-			sampler2D _MainTex;
 			float2 _ScreenSize;
 			float _Frequency;
 			float _BlackThresh;
@@ -147,7 +198,12 @@
 				float3 rgbscreen = 1.0 - 0.9 * float3(c,m,y) + n;
 				rgbscreen = lerp(rgbscreen, black, 0.85*k + 0.3*n);
 				
-				float3 finalColor = lerp(black, rgbscreen, aastep(_BlackThresh, CalcLuminance(col)));
+				// Create solid black areas where the luminance is low enough
+				float3 kFilledColor = lerp(black, rgbscreen, aastep(_BlackThresh, CalcLuminance(col)));
+				
+				// Override with black if a line should be here
+				float contour = CalculateContour(i.uv);
+				float3 finalColor = lerp(kFilledColor, black, contour);
 	
 				return float4(finalColor, 1.0);
 			}

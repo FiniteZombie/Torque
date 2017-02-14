@@ -104,9 +104,10 @@
 			float _Width;
 			float _LineThresh;
 			
-			void SampleNeighbors(float2 uv, out float3 sample[16])
+			void SampleNeighbors(float2 uv, float n, out float3 sample[16])
 			{
-				float stepWidth = _Width / 2.0;
+				float n_width = (n / 50.0) + _Width;
+				float stepWidth = n_width / 2.0;
 				
 				[unroll]
 				for (int i = 0; i < 2; i++)
@@ -124,10 +125,10 @@
 				}
 			}
 			
-			float CalculateContour(float2 uv)
+			float CalculateContour(float2 uv, float n)
 			{
 				float3 sample[16];
-				SampleNeighbors(uv, sample);
+				SampleNeighbors(uv, n, sample);
 				
 				float3 color = tex2D(_MainTex, uv);
 			
@@ -199,10 +200,10 @@
 				rgbscreen = lerp(rgbscreen, black, 0.85*k + 0.3*n);
 				
 				// Create solid black areas where the luminance is low enough
-				float3 kFilledColor = lerp(black, rgbscreen, aastep(_BlackThresh, CalcLuminance(col)));
+				float3 kFilledColor = lerp(black, rgbscreen, aastep(_BlackThresh, n/50 + CalcLuminance(col)));
 				
 				// Override with black if a line should be here
-				float contour = CalculateContour(i.uv);
+				float contour = CalculateContour(i.uv, n);
 				float3 finalColor = lerp(kFilledColor, black, contour);
 	
 				return float4(finalColor, 1.0);

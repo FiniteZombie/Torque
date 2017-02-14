@@ -484,6 +484,11 @@ Prefab:
       propertyPath: MaxTurnAngle
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 114745655656734342, guid: 9eaed0879dcfc15498cad5beb8c4dcba,
+        type: 2}
+      propertyPath: Hennastring
+      value: Super freaking cool
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9eaed0879dcfc15498cad5beb8c4dcba, type: 2}
   m_IsPrefabParent: 0

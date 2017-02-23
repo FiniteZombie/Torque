@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
-    
+
+    public Camera Camera;
     public float RoadSize;
     public float WheelPosition = .75f;
     public float WheelSize = .4f;
@@ -37,11 +38,17 @@ public class PlayerInput : MonoBehaviour {
         position.x = Mathf.Clamp(position.x, -.5f * RoadSize, .5f * RoadSize);
 
         transform.position = position;
+
+        var camPosition = Camera.transform.position;
+        camPosition.x = position.x;
+        Camera.transform.position = camPosition;
     }
 
     public float GetWheelPosition(Vector2 touchPosition) {
         var viewPos = touchPosition.x / Screen.width;
         var val = viewPos - WheelPosition;
+        val = Mathf.Clamp(val, -(WheelSize / 2f), WheelSize / 2f);
+
         return val / WheelSize;
     }
 
@@ -51,6 +58,6 @@ public class PlayerInput : MonoBehaviour {
         var turnAngle = MaxTurnAngle * amount;
         var carAngle = -90f + turnAngle;
         var rotation = Quaternion.Euler(0, carAngle, 0);
-        transform.rotation = rotation;
+        transform.localRotation = rotation;
     }
 }

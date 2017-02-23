@@ -71,3 +71,4 @@ sysinfo.txt
 /*.booproj
 /.idea*/
 build.apk
+*.apk

@@ -151,4 +151,4 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _ScreenSize
-      second: {r: 348, g: 503, b: 0, a: 0}
+      second: {r: 375, g: 503, b: 0, a: 0}

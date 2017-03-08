@@ -203,7 +203,7 @@ Camera:
   m_GameObject: {fileID: 747152815}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.7352941, g: 0, b: 0.7150103, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -349,7 +349,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5acb315992e508e41a9633cf9152e06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Offset: 0
+  Light: {fileID: 1647118318}
+  Speed: 0.01
+  LightCount: 3
 --- !u!1001 &861005853
 Prefab:
   m_ObjectHideFlags: 0
@@ -427,6 +429,137 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9eaed0879dcfc15498cad5beb8c4dcba, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1107646952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1107646953}
+  - component: {fileID: 1107646954}
+  m_Layer: 0
+  m_Name: Head light (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1107646953
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1107646952}
+  m_LocalRotation: {x: -0.0000010207294, y: 0.07163709, z: -0.012604525, w: 0.99735117}
+  m_LocalPosition: {x: 1.8351262, y: -0.023193873, z: -0.13181877}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1376732848}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 9.979, y: 94.171, z: 0}
+--- !u!108 &1107646954
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1107646952}
+  m_Enabled: 1
+  serializedVersion: 7
+  m_Type: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 3.5
+  m_Range: 91.29
+  m_SpotAngle: 41
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!1 &1376732847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1376732848}
+  - component: {fileID: 1376732849}
+  m_Layer: 0
+  m_Name: Head light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1376732848
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1376732847}
+  m_LocalRotation: {x: 0.10893059, y: 0.6724356, z: -0.10920593, w: 0.72390515}
+  m_LocalPosition: {x: 2.5900397, y: 0.65163016, z: 0.8900006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1107646953}
+  m_Father: {fileID: 1426172183}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 17.733002, y: 85.66901, z: -0.69900006}
+--- !u!108 &1376732849
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1376732847}
+  m_Enabled: 1
+  serializedVersion: 7
+  m_Type: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 3.5
+  m_Range: 91.29
+  m_SpotAngle: 41
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &1426172183 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 401998, guid: 9eaed0879dcfc15498cad5beb8c4dcba, type: 2}
+  m_PrefabInternal: {fileID: 861005853}
 --- !u!1 &1647118318
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +570,7 @@ GameObject:
   - component: {fileID: 1647118319}
   - component: {fileID: 1647118320}
   m_Layer: 0
-  m_Name: Directional light
+  m_Name: Street light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,12 +599,12 @@ Light:
   serializedVersion: 7
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 8
+  m_Intensity: 1.15
   m_Range: 296.19
   m_SpotAngle: 29.75188
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1

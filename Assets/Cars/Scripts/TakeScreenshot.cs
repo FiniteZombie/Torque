@@ -28,7 +28,7 @@ public class TakeScreenshot : MonoBehaviour
  
             } while (System.IO.File.Exists(screenshotFilename));
  
-            Application.CaptureScreenshot(screenshotFilename);
+            ScreenCapture.CaptureScreenshot(screenshotFilename);
         }
     }
 }

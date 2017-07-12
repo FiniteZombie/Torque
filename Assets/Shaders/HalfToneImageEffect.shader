@@ -8,6 +8,7 @@ Shader "HalfToneImageEffect"
 		_ScreenSize ("Screen Size", Vector) = (0, 0, 0, 0)
 		_Frequency ("Frequency", Float) = 40
 		_BlackThresh ("Black Threshold", Float) = 0.5
+		_WhiteThresh ("White Threshold", Float) = 0.5
 		_Width ("Line Width", Float) = .1
 		_LineThresh ("Line Threshold", Float) = .5
 	}
@@ -158,6 +159,7 @@ Shader "HalfToneImageEffect"
 			float2 _ScreenSize;
 			float _Frequency;
 			float _BlackThresh;
+			float _WhiteThresh;
 
 			fixed4 frag (v2f i) : SV_Target
 			{
@@ -168,7 +170,7 @@ Shader "HalfToneImageEffect"
 				n = n + 0.05 * snoise(i.uv * 800.0);
 				
 				float n_white = n * .5 + .98;
-				float n_black = n + .1;
+				float n_black = n;
 				float3 white = float3(n_white, n_white, n_white);
 				float3 black = float3(n_black, n_black, n_black);
 				
@@ -188,24 +190,25 @@ Shader "HalfToneImageEffect"
 				
 				float2 Cst = mul(mul(_Frequency, float2x2(0.966, -0.259, 0.259, 0.966)), i.uv);
 				float2 Cuv = 2.0 * frac(Cst) - 1.0;
-				float c = aastep(0.0, sqrt(cmyk.r) - length(Cuv) + n);
+				float c = aastep(0.0, sqrt(cmyk.r) - length(Cuv) + n + .5);
 				
 				float2 Mst = mul(mul(_Frequency, float2x2(0.966, 0.259, -0.259, 0.966)), i.uv);
 				float2 Muv = 2.0 * frac(Mst) - 1.0;
-				float m = aastep(0.0, sqrt(cmyk.g) - length(Muv) + n);
+				float m = aastep(0.0, sqrt(cmyk.g) - length(Muv) + n + .5);
 				
 				float2 Yst = mul(_Frequency, i.uv); // 0 deg
 				float2 Yuv = 2.0 * frac(Yst) - 1.0;
-				float y = aastep(0.0, sqrt(cmyk.b) - length(Yuv) + n);
+				float y = aastep(0.0, sqrt(cmyk.b) - length(Yuv) + n + .5);
 			 
 				float3 rgbscreen = 1.0 - 0.9 * float3(c,m,y) + n;
 				rgbscreen = lerp(rgbscreen, black, 0.85*k + 0.3*n);
 				
 				// Create solid black areas where the luminance is low enough
 				float3 kFilledColor = lerp(black, rgbscreen, aastep(_BlackThresh, n/50 + CalcLuminance(col)));
+				kFilledColor = lerp(kFilledColor, white, aastep(_WhiteThresh, CalcLuminance(col)));
 				
 				// Override with black if a line should be here
-				float contour = CalculateContour(i.uv, n);
+				float contour = CalculateContour(i.uv, n/50);
 				float3 finalColor = lerp(kFilledColor, black, contour);
 	
 				return float4(finalColor, 1.0);
